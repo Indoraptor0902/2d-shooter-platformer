@@ -24,11 +24,14 @@ class Game:
 
             self.win.fill(WHITE)
 
+            self.player.update()
+
             self.player.draw(self.win)
 
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     self.running = False
+                self.player.handle_movement(event) 
                 if event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_q:
                         self.running = False
