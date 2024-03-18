@@ -1,34 +1,35 @@
 import pygame
-import random
+from settings import *
+from player import *
 
-pygame.init()
 
-FPS = 60
+class Game:
+    def __init__(self):
+        pygame.init()
 
-WIDTH, HEIGHT = 1000, 800
+        self.win = pygame.display.set_mode((WIDTH, HEIGHT))
 
-win = pygame.display.set_mode((WIDTH, HEIGHT))
+        pygame.display.set_caption('Shooter Platformer')
 
-pygame.display.set_caption('Shooter Platformer')
+        self.running = True
 
-def main():
-    run = True
+        self.clock = pygame.time.Clock()
 
-    clock = pygame.time.Clock()
+    def run(self):
+        while self.running:
+            self.clock.tick(FPS)
 
-    while run:
-        clock.tick(FPS)
-
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                run = False
-            if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_q:
-                    run = False
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    self.running = False
+                if event.type == pygame.KEYDOWN:
+                    if event.key == pygame.K_q:
+                        self.running = False
+            
+            pygame.display.flip()
         
-        pygame.display.flip()
-    
-    quit()
+        quit()
 
 if __name__ == '__main__':
-    main()
+    game = Game()
+    game.run()
