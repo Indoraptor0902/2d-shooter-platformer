@@ -2,6 +2,7 @@ import pygame
 from scripts.settings import *
 from scripts.colors import *
 from scripts.player import Player
+from scripts.tilemap import Tilemap
 
 
 class Game:
@@ -17,6 +18,8 @@ class Game:
         self.clock = pygame.time.Clock()
 
         self.player = Player(self, (50, 50))
+
+        self.tilemap = Tilemap(self, tile_size=20)
 
     def run(self):
         while self.running:

@@ -1,6 +1,7 @@
 import pygame
 from scripts.settings import *
 from scripts.colors import *
+from scripts.utils import load_image
 
 pygame.init()
 
@@ -9,7 +10,7 @@ class Player:
         self.game = game
         self.pos = list(pos)
         
-        self.unscaled_image = pygame.image.load('data/images/entities/player.png').convert()
+        self.unscaled_image = load_image('entities/player.png')
         self.scale = 5
         self.image = pygame.transform.scale(self.unscaled_image, (self.unscaled_image.get_width() * self.scale, self.unscaled_image.get_height() * self.scale))
         self.image.set_colorkey(BLACK)
