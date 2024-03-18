@@ -1,6 +1,7 @@
 import pygame
-from settings import *
-from player import *
+from scripts.settings import *
+from scripts.colors import *
+from scripts.player import Player
 
 
 class Game:
@@ -15,9 +16,15 @@ class Game:
 
         self.clock = pygame.time.Clock()
 
+        self.player = Player(self, (50, 50))
+
     def run(self):
         while self.running:
             self.clock.tick(FPS)
+
+            self.win.fill(WHITE)
+
+            self.player.draw(self.win)
 
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
