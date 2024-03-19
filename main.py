@@ -19,7 +19,7 @@ class Game:
 
         self.player = Player(self, (50, 50))
 
-        self.tilemap = Tilemap(self, tile_size=20)
+        self.tilemap = Tilemap(self)
 
     def run(self):
         while self.running:

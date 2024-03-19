@@ -1,11 +1,9 @@
 import pygame
-
-pygame.init()
-
 from scripts.utils import load_images
+from scripts.settings import *
 
 class Tilemap:
-    def __init__(self, game, tile_size=20):
+    def __init__(self, game, tile_size=16*IMG_SCALE):
         self.game = game
         self.tile_size = tile_size
         self.tilemap = {}
@@ -19,7 +17,7 @@ class Tilemap:
         }
 
         for i in range(10):
-            self.tilemap[str(3 + i) + ';10'] = {'type': 'grass', 'variant': 1, 'pos': (3 + i, 10)}
+            self.tilemap[str(3 + i) + ';5'] = {'type': 'grass', 'variant': 1, 'pos': (3 + i, 5)}
             self.tilemap['10;' + str(5 + i)] = {'type': 'stone', 'variant': 1, 'pos': (10, 5 + i)}
     
     def draw(self, win):
