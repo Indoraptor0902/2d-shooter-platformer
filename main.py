@@ -27,6 +27,8 @@ class Game:
 
             self.win.fill(WHITE)
 
+            self.tilemap.draw(self.win)
+
             self.player.update()
 
             self.player.draw(self.win)

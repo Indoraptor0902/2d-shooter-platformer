@@ -10,9 +10,7 @@ class Player:
         self.game = game
         self.pos = list(pos)
         
-        self.unscaled_image = load_image('entities/player.png')
-        self.scale = 5
-        self.image = pygame.transform.scale(self.unscaled_image, (self.unscaled_image.get_width() * self.scale, self.unscaled_image.get_height() * self.scale))
+        self.image = load_image('entities/player.png')
         self.image.set_colorkey(BLACK)
 
         self.movement = [0, False]
