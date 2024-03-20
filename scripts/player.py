@@ -20,17 +20,18 @@ class Player:
     def handle_movement(self, event):
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_LEFT:
-                self.movement[0] = -1
+                self.movement[0] += -1
             if event.key == pygame.K_RIGHT:
-                self.movement[1] = 1
+                self.movement[0] += 1
         if event.type == pygame.KEYUP:
             if event.key == pygame.K_LEFT:
                 self.movement[0] -= -1
             if event.key == pygame.K_RIGHT:
-                self.movement[1] -= 1
+                self.movement[0] -= 1
     
     def update(self):
-        self.velocity = [self.movement[0] * self.speed + self.movement[1] * self.speed, 0]
+        self.velocity[0] = self.movement[0] * self.speed
+        self.velocity[1] = min(5, self.velocity[1] + 0.1)
 
         self.pos[0] += self.velocity[0]
         self.pos[1] += self.velocity[1]

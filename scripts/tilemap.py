@@ -2,6 +2,8 @@ import pygame
 from scripts.utils import load_images
 from scripts.settings import *
 
+NEIGHBOR_OFFSETS = [(0, 1), (-1, 1), (-1, 0), (-1, -1), (0, -1), (1, -1), (1, 0), (1, 1), (0, 0)]
+
 class Tilemap:
     def __init__(self, game, tile_size=16*IMG_SCALE):
         self.game = game
