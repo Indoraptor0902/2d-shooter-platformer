@@ -29,7 +29,7 @@ class Game:
 
             self.tilemap.draw(self.win)
 
-            self.player.update()
+            self.player.update(self.tilemap)
 
             self.player.draw(self.win)
 

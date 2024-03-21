@@ -11,11 +11,16 @@ class Player:
         self.pos = list(pos)
         
         self.image = load_image('entities/player.png')
-        self.image.set_colorkey(BLACK)
+        self.size = [self.image.get_width(), self.image.get_height()]
 
         self.movement = [0, False]
         self.velocity = [0, 0]
         self.speed = 5
+
+        self.collisions = {'up': False, 'down': False, 'right': False, 'left': False}
+    
+    def rect(self):
+        return pygame.Rect(self.pos[0], self.pos[1], self.size[0], self.size[1])
     
     def handle_movement(self, event):
         if event.type == pygame.KEYDOWN:
@@ -23,18 +28,50 @@ class Player:
                 self.movement[0] += -1
             if event.key == pygame.K_RIGHT:
                 self.movement[0] += 1
+            if event.key == pygame.K_UP:
+                self.velocity[1] = -8
         if event.type == pygame.KEYUP:
             if event.key == pygame.K_LEFT:
                 self.movement[0] -= -1
             if event.key == pygame.K_RIGHT:
                 self.movement[0] -= 1
     
-    def update(self):
+    def update(self, tilemap):
         self.velocity[0] = self.movement[0] * self.speed
-        self.velocity[1] = min(5, self.velocity[1] + 0.1)
+        self.velocity[1] = min(10, self.velocity[1] + 0.3)
 
         self.pos[0] += self.velocity[0]
+        entity_rect = self.rect()
+        for rect in tilemap.physics_rects_around(self.pos):
+            if entity_rect.colliderect(rect):
+                if self.velocity[0] > 0:
+                    entity_rect.right = rect.left
+                    self.collisions['right'] = True
+                if self.velocity[0] < 0:
+                    entity_rect.left = rect.right
+                    self.collisions['left'] = True
+                self.pos[0] = entity_rect.x
+            else:
+                self.collisions['right'] = False
+                self.collisions['left'] = False
+
         self.pos[1] += self.velocity[1]
+        entity_rect = self.rect()
+        for rect in tilemap.physics_rects_around(self.pos):
+            if entity_rect.colliderect(rect):
+                if self.velocity[1] > 0:
+                    entity_rect.bottom = rect.top
+                    self.collisions['down'] = True
+                if self.velocity[1] < 0:
+                    entity_rect.top = rect.bottom
+                    self.collisions['up'] = True
+                self.pos[1] = entity_rect.y
+            else:
+                self.collisions['down'] = False
+                self.collisions['up'] = False
+        
+        if self.collisions['down'] or self.collisions['up']:
+            self.velocity[1] = 0
     
     def draw(self, win):
         win.blit(self.image, self.pos)
