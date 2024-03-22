@@ -37,6 +37,8 @@ class Player:
                 self.movement[0] -= 1
     
     def update(self, tilemap):
+        self.collisions = {'up': False, 'down': False, 'right': False, 'left': False}
+
         self.velocity[0] = self.movement[0] * self.speed
         self.velocity[1] = min(10, self.velocity[1] + 0.3)
 
@@ -51,9 +53,6 @@ class Player:
                     entity_rect.left = rect.right
                     self.collisions['left'] = True
                 self.pos[0] = entity_rect.x
-            else:
-                self.collisions['right'] = False
-                self.collisions['left'] = False
 
         self.pos[1] += self.velocity[1]
         entity_rect = self.rect()
@@ -66,12 +65,9 @@ class Player:
                     entity_rect.top = rect.bottom
                     self.collisions['up'] = True
                 self.pos[1] = entity_rect.y
-            else:
-                self.collisions['down'] = False
-                self.collisions['up'] = False
         
         if self.collisions['down'] or self.collisions['up']:
             self.velocity[1] = 0
     
-    def draw(self, win):
-        win.blit(self.image, self.pos)
+    def draw(self, win, offset=(0, 0)):
+        win.blit(self.image, (self.pos[0] - offset[0], self.pos[1] - offset[1]))
